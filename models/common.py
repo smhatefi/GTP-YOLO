@@ -35,7 +35,6 @@ except (ImportError, AssertionError):
 
 from ultralytics.utils.plotting import Annotator, colors, save_one_box
 
-from utils import TryExcept
 from utils.dataloaders import exif_transpose, letterbox
 from utils.general import (
     LOGGER,
