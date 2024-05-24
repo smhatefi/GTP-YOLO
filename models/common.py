@@ -961,7 +961,7 @@ class Detections:
                 LOGGER.info(f"Saved results to {save_dir}\n")
             return crops
 
-    @TryExcept("Showing images is not supported in this environment")
+    # @TryExcept("Showing images is not supported in this environment")
     def show(self, labels=True):
         """
         Displays detection results with optional labels.
