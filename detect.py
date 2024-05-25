@@ -37,42 +37,6 @@ def detect_fire(image_path, model):
 
     return img
 
-
-import numpy as np
-
-def scale_coords(img1_shape, coords, img0_shape, ratio_pad=None):
-    """
-    Rescales bounding box coordinates from the dimensions of img1_shape to img0_shape.
-    Arguments:
-    img1_shape: tuple, shape of the image used for inference (height, width)
-    coords: tensor, bounding box coordinates (x1, y1, x2, y2)
-    img0_shape: tuple, original shape of the image (height, width)
-    ratio_pad: optional, padding ratio (if any)
-
-    Returns:
-    coords: tensor, rescaled bounding box coordinates
-    """
-    if ratio_pad is None:
-        gain = min(img1_shape[0] / img0_shape[0], img1_shape[1] / img0_shape[1])  # gain = resized / original
-        pad = (img1_shape[1] - img0_shape[1] * gain) / 2, (img1_shape[0] - img0_shape[0] * gain) / 2  # wh padding
-    else:
-        gain = ratio_pad[0][0]
-        pad = ratio_pad[1]
-
-    coords[:, [0, 2]] -= pad[0]  # x padding
-    coords[:, [1, 3]] -= pad[1]  # y padding
-    coords[:, :4] /= gain
-    coords[:, :4] = coords[:, :4].round()
-
-    # Clip boxes to image dimensions
-    coords[:, 0].clamp_(0, img0_shape[1])  # x1
-    coords[:, 1].clamp_(0, img0_shape[0])  # y1
-    coords[:, 2].clamp_(0, img0_shape[1])  # x2
-    coords[:, 3].clamp_(0, img0_shape[0])  # y2
-
-    return coords
-
-
 # Example usage
 if __name__ == '__main__':
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
