@@ -35,6 +35,8 @@ class FireDetectionModel(Model):
 
     def forward(self, x, augment=False, profile=False):
         x = super().forward(x, augment, profile)
+        # Assuming x is a list of features from the YOLO model, and we need to apply our custom layers on the last feature
+        x = x[-1]  # Take the last feature map from YOLO backbone
         x = self.linear_attention(x)
         x = self.gated_temporary_pooling(x)
         return x
